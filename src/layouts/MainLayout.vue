@@ -3,16 +3,16 @@
     <q-header elevated>
       <q-toolbar>
         <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
+            flat
+            dense
+            round
+            icon="menu"
+            aria-label="Menu"
+            @click="toggleLeftDrawer"
         />
 
         <q-toolbar-title>
-          Quasar App
+          练手广场
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
@@ -20,87 +20,47 @@
     </q-header>
 
     <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
+        v-model="leftDrawerOpen"
+        show-if-above
+        bordered
     >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
+      <q-list bordered separator>
+        <q-item-label header>
+          练手练手
         </q-item-label>
 
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
+        <q-item v-for="item in drawerList" clickable v-ripple :to="item.to">
+          <q-avatar :icon="item.icon"></q-avatar>
+          <q-item-section>
+            <q-item-label>{{ item.title }}</q-item-label>
+            <q-item-label caption>{{ item.subTitle }}</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+import {ref} from 'vue'
 
 defineOptions({
   name: 'MainLayout'
 })
 
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
-
 const leftDrawerOpen = ref(false)
 
-function toggleLeftDrawer () {
+const drawerList = ref([
+  {icon: 'home', title: '首页', subTitle: '现实系统信息', to: '/'},
+  {icon: 'dashboard', title: '仪表盘', subTitle: '现实系统信息', to: '/dashboard'},
+  {icon: 'account_circle', title: '账号', subTitle: '当前账号信息', to: '/account'},
+])
+
+function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 </script>
